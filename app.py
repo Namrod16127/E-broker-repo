@@ -31,12 +31,9 @@ def main():
     forecast_out = 1
     st.title("E-broker")
     # Sign Up and login
-    menu = ["Home", "Login", "SignUp"]
+    menu = ["Login", "SignUp", "Home"]
     choice = st.sidebar.selectbox("Menu", menu)
-    if choice == "Home":
-        st.subheader("Home")
-
-    elif choice == "Login":
+    if choice == "Login":
         st.subheader("Login section")
         username = st.sidebar.text_input("User Name")
         password = st.sidebar.text_input("Password", type='password')
@@ -46,7 +43,7 @@ def main():
             if result:
                 st.success("Logged in as {}".format(username))
                 # Choosing the dataset
-                dataset_name = st.selectbox("Select Company",
+                dataset_name = st.sidebar.selectbox("Select Company",
                                                     ("BATU", "BOBU", "CENT", "CQCIL", "DFCU", "EABL", "EBL",
                                                      "JHL", "KA", "KCB", "NIC", "NMG", "NVL", "SBU", "UCHM",
                                                      "UCL", "UMEM"))
@@ -219,6 +216,8 @@ def main():
 
             else:
                 st.warning("Incorrect username or password")
+
+
     else:
         st.subheader("Create New Account")
         new_user = st.text_input("Username")
