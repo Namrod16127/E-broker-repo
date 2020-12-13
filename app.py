@@ -43,7 +43,7 @@ def main():
             if result:
                 st.success("Logged in as {}".format(username))
                 # Choosing the dataset
-                dataset_name = st.sidebar.selectbox("Select Company",
+                dataset_name = st.selectbox("Select Company",
                                                     ("BATU", "BOBU", "CENT", "CQCIL", "DFCU", "EABL", "EBL",
                                                      "JHL", "KA", "KCB", "NIC", "NMG", "NVL", "SBU", "UCHM",
                                                      "UCL", "UMEM"))
