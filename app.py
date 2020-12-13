@@ -145,8 +145,9 @@ def main():
 
                 # Plot the data
                 Closing_price = X
-                st.write(f"Closing prices for  {dataset_name} in the last {len(X) + 1} days")
-                st.line_chart(Closing_price)
+                if st.button("Chart"):
+                   st.write(f"Closing prices for  {dataset_name} in the last {len(X) + 1} days")
+                   st.line_chart(Closing_price)
 
                 # Testing model:  Score returns the co-efficient of determination R^2 of the prediction
                 # The best possible score is 1
@@ -158,27 +159,7 @@ def main():
                 Closing_trade = (X[len(X) - 1])
 
                 svm_prediction = svr_rbf.predict(x_forecast)
-                # Print the results for SVM
-                st.write(f"First prediction for next Closing price = {svm_prediction}")
-                st.write(f"Accuracy(First) = {svm_confidence}%")
-
-                # Create and train Linear Regression Model
-                lr = LinearRegression()
-                # Train the model
-                lr.fit(x_train, y_train)
-                # Testing model:  Score returns the co-efficient of determination R^2 of the prediction
-                # The best possible score is 1
-                lr_confidence = lr.score(x_test, y_test)
-                lr_confidence = lr_confidence * 100
-
-                # Show the predictions for the Linear Regression Model for the next 'n' days
-                lr_prediction = lr.predict(x_forecast)
-
-                # Print the results for linear regression
-                st.write(f"Second prediction for next Closing price = {lr_prediction}")
-                st.write(f"Accuracy(Second prediction) = {lr_confidence}%")
-                st.write(f"Closing price for the last trading day ={Closing_trade}")
-
+                # For the predicted rate of change form last trade to predicted price(SVM)
                 message = 'No increment or decrement in trade'
                 change = 0
                 if (Closing_trade > svm_prediction):
@@ -193,8 +174,27 @@ def main():
                     value_of_div = value_of_def / svm_prediction
                     change = value_of_div * 100
 
-                st.write(f"Predicted price change for first prediction = {message} by {change}%")
 
+
+                # Print the results for SVM
+                if st.button("First Prediction"):
+                    st.write(f"First prediction for next Closing price = {svm_prediction}")
+                    st.write(f"Accuracy(First) = {svm_confidence}%")
+                    st.write(f"Predicted price change for first prediction = {message} by {change}%")
+
+                # Create and train Linear Regression Model
+                lr = LinearRegression()
+                # Train the model
+                lr.fit(x_train, y_train)
+                # Testing model:  Score returns the co-efficient of determination R^2 of the prediction
+                # The best possible score is 1
+                lr_confidence = lr.score(x_test, y_test)
+                lr_confidence = lr_confidence * 100
+
+                # Show the predictions for the Linear Regression Model for the next 'n' days
+                lr_prediction = lr.predict(x_forecast)
+
+                # For the predicted rate of change form last trade to predicted price(SVM)
                 if (Closing_trade > lr_prediction):
                     message = 'Decrement on trade'
                     value_of_def = Closing_trade - lr_prediction
@@ -207,7 +207,16 @@ def main():
                     value_of_div = value_of_def / lr_prediction
                     change = value_of_div * 100
 
-                st.write(f"Predicted price change for second prediction = {message} by {change}%")
+
+
+                # Print the results for linear regression
+                if st.button("Second Prediction"):
+                   st.write(f"Second prediction for next Closing price = {lr_prediction}")
+                   st.write(f"Accuracy(Second prediction) = {lr_confidence}%")
+                   st.write(f"Predicted price change for second prediction = {message} by {change}%")
+                st.write(f"Closing price for the last trading day ={Closing_trade}")
+
+
             else:
                 st.warning("Incorrect username or password")
     else:
