@@ -171,13 +171,19 @@ def main():
                     value_of_div = value_of_def / svm_prediction
                     change = value_of_div * 100
 
-
+                if svm_confidence <= 60:
+                    confidence = "Not recommended. Please retry"
+                elif svm_confidence <= 100:
+                    confidence = "Recommended"
+                else:
+                    confidence = 0
 
                 # Print the results for SVM
                 if st.button("First Prediction"):
                     st.write(f"First prediction for next Closing price = {svm_prediction}")
                     st.write(f"Accuracy(First) = {svm_confidence}%")
                     st.write(f"Predicted price change for first prediction = {message} by {change}%")
+                    st.write(f"Comment ={confidence}")
 
                 # Create and train Linear Regression Model
                 lr = LinearRegression()
@@ -204,6 +210,13 @@ def main():
                     value_of_div = value_of_def / lr_prediction
                     change = value_of_div * 100
 
+                if lr_confidence <= 60:
+                    confidence = "Not recommended. Please retry."
+                elif lr_confidence <= 100:
+                    confidence = "Recommended"
+                else:
+                    confidence = 0
+
 
 
                 # Print the results for linear regression
@@ -211,6 +224,7 @@ def main():
                    st.write(f"Second prediction for next Closing price = {lr_prediction}")
                    st.write(f"Accuracy(Second prediction) = {lr_confidence}%")
                    st.write(f"Predicted price change for second prediction = {message} by {change}%")
+                   st.write(f"Comment = {confidence}")
                 st.write(f"Closing price for the last trading day ={Closing_trade}")
 
 
